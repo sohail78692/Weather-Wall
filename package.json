@@ -1,0 +1,26 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "A beautiful, modern weather application with real-time weather data.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sohail78692/Weather-Wall.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sohail78692/Weather-Wall/issues"
+  },
+  "homepage": "https://github.com/sohail78692/Weather-Wall#readme",
+  "devDependencies": {
+    "vite": "^7.2.4"
+  }
+}
