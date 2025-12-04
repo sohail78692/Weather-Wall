@@ -30,27 +30,11 @@
 
             <div class="saved-locations">
                 <div class="section-label">Saved Locations</div>
-                <!-- Static placeholders for design match -->
-                <div class="location-card active">
-                    <div>
-                        <div class="loc-name">London, UK</div>
-                        <div class="loc-desc">Partly Cloudy</div>
+                <div id="savedLocationsList">
+                    <!-- Dynamic Content -->
+                    <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+                        No saved locations
                     </div>
-                    <div class="loc-temp">24°</div>
-                </div>
-                <div class="location-card">
-                    <div>
-                        <div class="loc-name">New York</div>
-                        <div class="loc-desc">Rainy</div>
-                    </div>
-                    <div class="loc-temp">18°</div>
-                </div>
-                <div class="location-card">
-                    <div>
-                        <div class="loc-name">Tokyo</div>
-                        <div class="loc-desc">Sunny</div>
-                    </div>
-                    <div class="loc-temp">28°</div>
                 </div>
             </div>
 
@@ -82,7 +66,12 @@
                     <div class="hero-info">
                         <div class="hero-icon" id="weatherIconLarge">⛅</div>
                         <h1 id="temperature">24°C</h1>
-                        <div class="hero-location" id="cityName">London, UK</div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="hero-location" id="cityName">London, UK</div>
+                            <button id="saveLocationBtn" class="save-btn" title="Save Location">
+                                <ion-icon name="bookmark-outline"></ion-icon>
+                            </button>
+                        </div>
                         <div class="hero-condition" id="condition">Partly Cloudy</div>
                     </div>
                     <div class="hero-visual">
@@ -166,27 +155,10 @@
             </button>
             <div class="mobile-overlay-content">
                 <h2 class="overlay-title">Saved Locations</h2>
-                <div class="saved-locations-list">
-                    <div class="location-card active">
-                        <div>
-                            <div class="loc-name">London, UK</div>
-                            <div class="loc-desc">Partly Cloudy</div>
-                        </div>
-                        <div class="loc-temp">24°</div>
-                    </div>
-                    <div class="location-card">
-                        <div>
-                            <div class="loc-name">New York</div>
-                            <div class="loc-desc">Rainy</div>
-                        </div>
-                        <div class="loc-temp">18°</div>
-                    </div>
-                    <div class="location-card">
-                        <div>
-                            <div class="loc-name">Tokyo</div>
-                            <div class="loc-desc">Sunny</div>
-                        </div>
-                        <div class="loc-temp">28°</div>
+                <div class="saved-locations-list" id="mobileSavedLocationsList">
+                    <!-- Dynamic Content -->
+                    <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+                        No saved locations
                     </div>
                 </div>
             </div>

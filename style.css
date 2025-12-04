@@ -522,9 +522,56 @@ body[data-theme="light"] {
     border-radius: 2px;
 }
 
+/* Save Button */
+.save-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.save-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.save-btn.saved {
+    color: #ffcc00;
+    /* Gold color for saved state */
+}
+
+[data-theme="light"] .save-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
 /* Mobile Navigation (Hidden on Desktop) */
 .mobile-nav {
     display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    /* Transparent dark glass */
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 100;
+}
+
+[data-theme="light"] .mobile-nav {
+    background: rgba(255, 255, 255, 0.2);
+    /* Transparent light glass */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Mobile Overlays (Generic) */
@@ -682,12 +729,13 @@ body[data-theme="light"] {
         width: 80px;
     }
 
-    .logo-text,
-    .search-input,
-    .section-label,
-    .loc-name,
-    .loc-desc,
-    .loc-temp {
+    /* Scope hiding to sidebar only */
+    .sidebar .logo-text,
+    .sidebar .search-input,
+    .sidebar .section-label,
+    .sidebar .loc-name,
+    .sidebar .loc-desc,
+    .sidebar .loc-temp {
         display: none;
     }
 

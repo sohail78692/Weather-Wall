@@ -143,6 +143,9 @@ function displayCurrentWeather(data) {
         const lon = location.lon;
         radarFrame.src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&detailLat=${lat}&detailLon=${lon}&width=650&height=450&zoom=5&level=surface&overlay=rain&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1`;
     }
+
+    // Update Save Button State
+    updateSaveButtonState();
 }
 
 function displayDailyForecast(data) {
@@ -208,6 +211,101 @@ function handleUnitToggle(e) {
             displayDailyForecast(currentWeatherData);
         }
     }
+}
+
+// ===================================
+// SAVED LOCATIONS LOGIC
+// ===================================
+let savedLocations = JSON.parse(localStorage.getItem('savedLocations')) || [];
+
+function isLocationSaved(cityName) {
+    return savedLocations.some(loc => loc.name.toLowerCase() === cityName.toLowerCase());
+}
+
+function toggleSaveLocation() {
+    if (!currentWeatherData) return;
+
+    const location = currentWeatherData.location;
+    const current = currentWeatherData.current;
+    const cityName = location.name;
+
+    if (isLocationSaved(cityName)) {
+        // Remove
+        savedLocations = savedLocations.filter(loc => loc.name.toLowerCase() !== cityName.toLowerCase());
+    } else {
+        // Add
+        savedLocations.push({
+            name: location.name,
+            country: location.country,
+            temp_c: current.temp_c,
+            condition: current.condition.text
+        });
+    }
+
+    localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
+    updateSaveButtonState();
+    renderSavedLocations();
+}
+
+function updateSaveButtonState() {
+    const btn = document.getElementById('saveLocationBtn');
+    if (!btn || !currentWeatherData) return;
+
+    const cityName = currentWeatherData.location.name;
+    const icon = btn.querySelector('ion-icon');
+
+    if (isLocationSaved(cityName)) {
+        btn.classList.add('saved');
+        icon.setAttribute('name', 'bookmark');
+    } else {
+        btn.classList.remove('saved');
+        icon.setAttribute('name', 'bookmark-outline');
+    }
+}
+
+function renderSavedLocations() {
+    const desktopList = document.getElementById('savedLocationsList');
+    const mobileList = document.getElementById('mobileSavedLocationsList');
+
+    const generateHTML = () => {
+        if (savedLocations.length === 0) {
+            return '<div style="text-align: center; color: var(--text-muted); padding: 20px;">No saved locations</div>';
+        }
+
+        return savedLocations.map(loc => `
+            <div class="location-card" data-city="${loc.name}">
+                <div>
+                    <div class="loc-name">${loc.name}</div>
+                    <div class="loc-desc">${loc.condition}</div>
+                </div>
+                <div class="loc-temp">${Math.round(loc.temp_c)}°</div>
+            </div>
+        `).join('');
+    };
+
+    const html = generateHTML();
+    if (desktopList) desktopList.innerHTML = html;
+    if (mobileList) mobileList.innerHTML = html;
+
+    // Add click handlers to new elements
+    const attachListeners = (container) => {
+        if (!container) return;
+        container.querySelectorAll('.location-card').forEach(card => {
+            const cityName = card.dataset.city;
+            if (cityName) {
+                card.addEventListener('click', () => {
+                    getWeather(cityName);
+                    // Close overlays if on mobile
+                    if (window.innerWidth <= 768) {
+                        closeAllOverlays();
+                    }
+                });
+            }
+        });
+    };
+
+    attachListeners(desktopList);
+    attachListeners(mobileList);
 }
 
 // ===================================
@@ -370,7 +468,14 @@ elements.searchInput.addEventListener('keypress', (e) => {
 });
 elements.unitToggle.addEventListener('click', handleUnitToggle);
 
+// Save Button Listener
+const saveBtn = document.getElementById('saveLocationBtn');
+if (saveBtn) {
+    saveBtn.addEventListener('click', toggleSaveLocation);
+}
+
 window.addEventListener('load', () => {
     applyTheme(currentTheme);
+    renderSavedLocations();
     getWeather('London');
 });
