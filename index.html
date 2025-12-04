@@ -4,175 +4,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Check real-time weather conditions for any location worldwide with our beautiful, modern weather app">
-    <title>Weather Now - Real-Time Weather Conditions</title>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="weather.png" />
-
-    <!-- Stylesheet -->
+    <title>Weather Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Ionicons for UI icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-    <!-- Dynamic Background -->
-    <div class="background-gradient" id="bgGradient"></div>
 
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1 class="logo">
-                <span class="logo-icon">☀️</span>
-                Weather Now
-            </h1>
-            <button class="unit-toggle" id="unitToggle">
-                <span class="unit-option active" data-unit="celsius">°C</span>
-                <span class="unit-divider">|</span>
-                <span class="unit-option" data-unit="fahrenheit">°F</span>
-            </button>
-        </header>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <ion-icon name="cloudy-night" style="font-size: 24px; color: #fff;"></ion-icon>
+                <span class="logo-text">Weather</span>
+            </div>
 
-        <!-- Search Section -->
-        <section class="search-section">
-            <div class="search-container">
-                <div class="search-input-wrapper">
-                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search for a city..."
-                        autocomplete="off">
-                    <button class="search-btn" id="searchBtn">Search</button>
-                </div>
-                <button class="location-btn" id="locationBtn" title="Use current location">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <line x1="12" y1="2" x2="12" y2="6"></line>
-                        <line x1="12" y1="18" x2="12" y2="22"></line>
-                        <line x1="2" y1="12" x2="6" y2="12"></line>
-                        <line x1="18" y1="12" x2="22" y2="12"></line>
-                    </svg>
+            <div class="search-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search city...">
+                <button class="search-icon-btn" id="searchBtn">
+                    <ion-icon name="search-outline"></ion-icon>
                 </button>
             </div>
-        </section>
 
-        <!-- Loading State -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Loading weather data...</p>
+            <div class="saved-locations">
+                <div class="section-label">Saved Locations</div>
+                <!-- Static placeholders for design match -->
+                <div class="location-card active">
+                    <div>
+                        <div class="loc-name">London, UK</div>
+                        <div class="loc-desc">Partly Cloudy</div>
+                    </div>
+                    <div class="loc-temp">24°</div>
+                </div>
+                <div class="location-card">
+                    <div>
+                        <div class="loc-name">New York</div>
+                        <div class="loc-desc">Rainy</div>
+                    </div>
+                    <div class="loc-temp">18°</div>
+                </div>
+                <div class="location-card">
+                    <div>
+                        <div class="loc-name">Tokyo</div>
+                        <div class="loc-desc">Sunny</div>
+                    </div>
+                    <div class="loc-temp">28°</div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="unit-switch" id="unitToggle">
+                    <button class="unit-btn active" data-unit="celsius">°C</button>
+                    <button class="unit-btn" data-unit="fahrenheit">°F</button>
+                </div>
+                <button class="theme-toggle-btn" id="themeToggle">
+                    <ion-icon name="moon-outline"></ion-icon>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div class="header-title">
+                    <h2>Dashboard</h2>
+                </div>
+            </div>
+
+            <!-- Main Column (Left) -->
+            <div class="main-column">
+                <!-- Hero Card -->
+                <div class="glass-card hero-card" id="currentWeatherCard">
+                    <div class="hero-info">
+                        <div class="hero-icon" id="weatherIconLarge">⛅</div>
+                        <h1 id="temperature">24°C</h1>
+                        <div class="hero-location" id="cityName">London, UK</div>
+                        <div class="hero-condition" id="condition">Partly Cloudy</div>
+                    </div>
+                    <div class="hero-visual">
+                        <!-- 3D Sun/Cloud Image Placeholder -->
+                    </div>
+                </div>
+
+                <!-- Temperature Graph -->
+                <div class="glass-card graph-card">
+                    <div class="section-label" style="color: white; margin-bottom: 10px;">Temperature</div>
+                    <div class="graph-placeholder">
+                        <div class="graph-line"></div>
+                        <!-- Simple axis labels -->
+                        <div
+                            style="display: flex; justify-content: space-between; position: absolute; bottom: 5px; width: 100%; padding: 0 10px; font-size: 0.7rem; color: rgba(255,255,255,0.6);">
+                            <span>Morning</span>
+                            <span>Afternoon</span>
+                            <span>Evening</span>
+                            <span>Night</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Stats Grid -->
+                <div class="stats-grid">
+                    <div class="glass-card stat-card">
+                        <div class="stat-title">Real Feel</div>
+                        <div class="stat-value" id="feelsLike">24°</div>
+                        <div class="stat-visual">🌡️</div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-title">Wind Speed</div>
+                        <div class="stat-value" id="windSpeed">12 km/h</div>
+                        <div class="stat-visual">🧭</div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-title">UV Index</div>
+                        <div class="stat-value" id="uvIndex">4</div>
+                        <div class="stat-visual">☀️</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Column (Right) -->
+            <div class="side-column">
+                <!-- Radar Map -->
+                <div class="glass-card radar-card">
+                    <iframe id="radarFrame"
+                        src="https://embed.windy.com/embed2.html?lat=51.5074&lon=-0.1278&detailLat=51.5074&detailLon=-0.1278&width=650&height=450&zoom=5&level=surface&overlay=rain&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
+                        frameborder="0">
+                    </iframe>
+                </div>
+
+                <!-- 7 Day Forecast -->
+                <div class="glass-card" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="section-label" style="color: white; margin-bottom: 15px;">7 Day Forecast</div>
+                    <div class="forecast-list" id="dailyForecast">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Search Overlay -->
+        <div class="mobile-overlay" id="mobileSearchOverlay">
+            <button class="close-overlay" id="closeSearchBtn">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="mobile-overlay-content">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search city...">
+                <button class="mobile-search-btn" id="mobileSearchBtn">
+                    <ion-icon name="search-outline"></ion-icon>
+                </button>
+            </div>
         </div>
 
-        <!-- Error State -->
-        <div class="error" id="error">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <h3 id="errorTitle">Oops!</h3>
-            <p id="errorMessage">Something went wrong</p>
+        <!-- Mobile Saved Locations Overlay -->
+        <div class="mobile-overlay" id="mobileSavedOverlay">
+            <button class="close-overlay" id="closeSavedBtn">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="mobile-overlay-content">
+                <h2 class="overlay-title">Saved Locations</h2>
+                <div class="saved-locations-list">
+                    <div class="location-card active">
+                        <div>
+                            <div class="loc-name">London, UK</div>
+                            <div class="loc-desc">Partly Cloudy</div>
+                        </div>
+                        <div class="loc-temp">24°</div>
+                    </div>
+                    <div class="location-card">
+                        <div>
+                            <div class="loc-name">New York</div>
+                            <div class="loc-desc">Rainy</div>
+                        </div>
+                        <div class="loc-temp">18°</div>
+                    </div>
+                    <div class="location-card">
+                        <div>
+                            <div class="loc-name">Tokyo</div>
+                            <div class="loc-desc">Sunny</div>
+                        </div>
+                        <div class="loc-temp">28°</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Weather Content -->
-        <div class="weather-content" id="weatherContent">
-            <!-- Current Weather -->
-            <section class="current-weather glass-card">
-                <div class="location-info">
-                    <h2 class="city-name" id="cityName">London</h2>
-                    <p class="date-time" id="dateTime">Monday, 25 Nov 2025 | 9:30 PM</p>
-                </div>
-
-                <div class="weather-main">
-                    <div class="weather-icon-large" id="weatherIconLarge">☀️</div>
-                    <div class="temperature-display">
-                        <h1 class="temperature" id="temperature">24°</h1>
-                        <p class="feels-like" id="feelsLike">Feels like 22°</p>
+        <!-- Mobile Settings Overlay -->
+        <div class="mobile-overlay" id="mobileSettingsOverlay">
+            <button class="close-overlay" id="closeSettingsBtn">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="mobile-overlay-content">
+                <h2 class="overlay-title">Settings</h2>
+                <div class="settings-group">
+                    <label>Temperature Unit</label>
+                    <div class="unit-switch mobile-unit-switch" id="mobileUnitToggle">
+                        <button class="unit-btn active" data-unit="celsius">Celsius (°C)</button>
+                        <button class="unit-btn" data-unit="fahrenheit">Fahrenheit (°F)</button>
                     </div>
                 </div>
-
-                <div class="weather-description">
-                    <p class="condition" id="condition">Clear Sky</p>
-                    <p class="temp-range" id="tempRange">H: 26° L: 18°</p>
+                <div class="settings-group">
+                    <label>App Theme</label>
+                    <button class="theme-toggle-btn" id="mobileThemeToggle"
+                        style="width: 100%; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <ion-icon name="moon-outline"></ion-icon>
+                            <span>Dark Mode</span>
+                        </div>
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                    </button>
                 </div>
-            </section>
-
-            <!-- Weather Details Grid -->
-            <section class="weather-details">
-                <div class="detail-card glass-card">
-                    <div class="detail-icon">💧</div>
-                    <div class="detail-info">
-                        <p class="detail-label">Humidity</p>
-                        <p class="detail-value" id="humidity">65%</p>
-                    </div>
-                </div>
-
-                <div class="detail-card glass-card">
-                    <div class="detail-icon">💨</div>
-                    <div class="detail-info">
-                        <p class="detail-label">Wind Speed</p>
-                        <p class="detail-value" id="windSpeed">12 km/h</p>
-                    </div>
-                </div>
-
-                <div class="detail-card glass-card">
-                    <div class="detail-icon">🌡️</div>
-                    <div class="detail-info">
-                        <p class="detail-label">Pressure</p>
-                        <p class="detail-value" id="pressure">1013 hPa</p>
-                    </div>
-                </div>
-
-                <div class="detail-card glass-card">
-                    <div class="detail-icon">👁️</div>
-                    <div class="detail-info">
-                        <p class="detail-label">Visibility</p>
-                        <p class="detail-value" id="visibility">10 km</p>
-                    </div>
-                </div>
-
-                <div class="detail-card glass-card">
-                    <div class="detail-icon">🌅</div>
-                    <div class="detail-info">
-                        <p class="detail-label">Sunrise</p>
-                        <p class="detail-value" id="sunrise">6:30 AM</p>
-                    </div>
-                </div>
-
-                <div class="detail-card glass-card">
-                    <div class="detail-icon">🌇</div>
-                    <div class="detail-info">
-                        <p class="detail-label">Sunset</p>
-                        <p class="detail-value" id="sunset">5:45 PM</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Hourly Forecast -->
-            <section class="forecast-section">
-                <h3 class="section-title">Hourly Forecast</h3>
-                <div class="hourly-forecast" id="hourlyForecast">
-                    <!-- Hourly items will be dynamically inserted -->
-                </div>
-            </section>
-
-            <!-- Daily Forecast -->
-            <section class="forecast-section">
-                <h3 class="section-title">5-Day Forecast</h3>
-                <div class="daily-forecast" id="dailyForecast">
-                    <!-- Daily items will be dynamically inserted -->
-                </div>
-            </section>
+            </div>
         </div>
+
+        <!-- Mobile Bottom Nav -->
+        <nav class="mobile-nav">
+            <div class="nav-item active" id="navHome"><ion-icon name="home"></ion-icon></div>
+            <div class="nav-item" id="navSearch"><ion-icon name="search"></ion-icon></div>
+            <div class="nav-item" id="navSaved"><ion-icon name="bookmark"></ion-icon></div>
+            <div class="nav-item" id="navSettings"><ion-icon name="settings"></ion-icon></div>
+        </nav>
+
     </div>
 
-    <!-- JavaScript with Vite -->
     <script type="module" src="script.js"></script>
 </body>
 
