@@ -1,4 +1,4 @@
-# Weather Website
+# ⛅ Weather Website
 
 A beautiful, modern weather application with real-time weather data powered by WeatherAPI.com.
 
